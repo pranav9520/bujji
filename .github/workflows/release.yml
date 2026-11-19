@@ -31,7 +31,7 @@ jobs:
         shell: pwsh
       - run: ./scripts/desktop-build.ps1
         shell: pwsh
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: windows-release
           path: desktop/release/*.zip
@@ -74,7 +74,7 @@ jobs:
           BUJJI_ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       - name: Name the community APK
         run: cp android/app/build/outputs/apk/release/app-release.apk Bujji-Android.apk
-      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: android-release
           path: Bujji-Android.apk
