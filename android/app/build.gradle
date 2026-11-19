@@ -36,7 +36,7 @@ def prepareKey = tasks.register('prepareLocalDebugKey', Exec) {
     commandLine new File(System.getProperty('java.home'), 'bin/keytool'+(System.getProperty('os.name').toLowerCase().contains('windows')?'.exe':'')), '-genkeypair','-keystore',key,'-storepass','android','-keypass','android','-alias','androiddebugkey','-dname','CN=Bujji Community Debug','-keyalg','RSA','-keysize','2048','-validity','10000','-noprompt'
 }
 tasks.configureEach { if(name=='validateSigningDebug')dependsOn prepareKey }
-dependencies { testImplementation 'junit:junit:4.13.2'; testImplementation 'org.robolectric:robolectric:4.14.1' }
+dependencies { testImplementation 'junit:junit:4.13.2'; testImplementation 'org.robolectric:robolectric:4.18' }
 
 tasks.withType(Test).configureEach {
     maxHeapSize = "768m"
