@@ -60,7 +60,11 @@ jobs:
           test -n "$KEYSTORE_BASE64" || { echo 'Configure the Android release signing secrets first. See docs/MAINTAINERS.md.'; exit 1; }
           printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.jks"
           chmod 600 "$RUNNER_TEMP/release.jks"
-      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Install Android SDK packages
+        run: |
+          SDK_MANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          test -x "$SDK_MANAGER" || { echo 'Android command-line tools missing from runner SDK.'; exit 1; }
+          "$SDK_MANAGER" 'platforms;android-35' 'build-tools;35.0.0'
       - run: ./gradlew :app:assembleRelease :app:testDebugUnitTest :app:lintDebug --console=plain
         working-directory: android
         env:

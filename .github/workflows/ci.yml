@@ -50,7 +50,11 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Install Android SDK packages
+        run: |
+          SDK_MANAGER="$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager"
+          test -x "$SDK_MANAGER" || { echo 'Android command-line tools missing from runner SDK.'; exit 1; }
+          "$SDK_MANAGER" 'platforms;android-35' 'build-tools;35.0.0'
       - run: ./gradlew :app:assembleDebug :app:testDebugUnitTest :app:lintDebug --console=plain
         working-directory: android
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
