@@ -1,0 +1,52 @@
+plugins { id 'com.android.application' }
+android {
+    namespace 'org.bujji.companion'
+    compileSdk 35
+    defaultConfig {
+        applicationId 'org.bujji.companion'
+        minSdk 26
+        targetSdk 35
+        versionCode 1
+        versionName '1.0.0'
+    }
+    def localDebugKey = rootProject.file('.local/debug.keystore')
+    signingConfigs { debug { storeFile localDebugKey; storePassword 'android'; keyAlias 'androiddebugkey'; keyPassword 'android' } }
+    signingConfigs {
+        release {
+            if (System.getenv('BUJJI_ANDROID_KEYSTORE')) {
+                storeFile file(System.getenv('BUJJI_ANDROID_KEYSTORE'))
+                storePassword System.getenv('BUJJI_ANDROID_STORE_PASSWORD')
+                keyAlias System.getenv('BUJJI_ANDROID_KEY_ALIAS')
+                keyPassword System.getenv('BUJJI_ANDROID_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        debug { minifyEnabled false }
+        release { minifyEnabled false; if (System.getenv('BUJJI_ANDROID_KEYSTORE')) signingConfig signingConfigs.release }
+    }
+    compileOptions { sourceCompatibility JavaVersion.VERSION_17; targetCompatibility JavaVersion.VERSION_17 }
+    lint { abortOnError true }
+    testOptions { unitTests.includeAndroidResources = true }
+}
+def prepareKey = tasks.register('prepareLocalDebugKey', Exec) {
+    def key = rootProject.file('.local/debug.keystore')
+    onlyIf { !key.exists() }
+    doFirst { key.parentFile.mkdirs() }
+    commandLine new File(System.getProperty('java.home'), 'bin/keytool'+(System.getProperty('os.name').toLowerCase().contains('windows')?'.exe':'')), '-genkeypair','-keystore',key,'-storepass','android','-keypass','android','-alias','androiddebugkey','-dname','CN=Bujji Community Debug','-keyalg','RSA','-keysize','2048','-validity','10000','-noprompt'
+}
+tasks.configureEach { if(name=='validateSigningDebug')dependsOn prepareKey }
+dependencies { testImplementation 'junit:junit:4.13.2'; testImplementation 'org.robolectric:robolectric:4.14.1' }
+
+tasks.withType(Test).configureEach {
+    maxHeapSize = "768m"
+    def testCache = rootProject.file('.gradle/robolectric-home')
+    doFirst { testCache.mkdirs() }
+    systemProperty "user.home", testCache.absolutePath
+    if(System.getProperty("https.proxyHost")) {
+        systemProperty "robolectric.dependency.proxy.host",System.getProperty("https.proxyHost")
+        systemProperty "robolectric.dependency.proxy.port",System.getProperty("https.proxyPort","8080")
+    }
+    systemProperty "robolectric.dependency.repo.url", "https://repo.maven.apache.org/maven2"
+    ["https.proxyHost","https.proxyPort","http.proxyHost","http.proxyPort","javax.net.ssl.trustStore"].each { key -> if(System.getProperty(key))systemProperty key,System.getProperty(key) }
+}

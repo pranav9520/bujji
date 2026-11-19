@@ -1,0 +1,84 @@
+{
+  "name": "bujji-desktop",
+  "productName": "Bujji",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bujji personal desktop companion",
+  "author": "Bujji contributors",
+  "license": "MIT",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.cjs",
+    "pack:win": "electron-builder --win zip --x64",
+    "pack:installer": "electron-builder --win nsis --x64"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0"
+  },
+  "devDependencies": {
+    "electron": "^42.0.0",
+    "electron-builder": "^26.0.0"
+  },
+  "build": {
+    "appId": "org.bujji.desktop",
+    "productName": "Bujji",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      "policy.cjs",
+      "notifications.cjs",
+      "assets/*",
+      "package.json",
+      "microphone.cjs",
+      "sound.cjs"
+    ],
+    "extraResources": [
+      {
+        "from": "backend-dist/bujji-backend",
+        "to": "backend"
+      },
+      {
+        "from": "../frontend/dist",
+        "to": "frontend"
+      },
+      {
+        "from": "../.env.example",
+        "to": "config.example"
+      },
+      {
+        "from": "THIRD_PARTY_LICENSES.json",
+        "to": "THIRD_PARTY_LICENSES.json"
+      },
+      {
+        "from": "../LICENSE",
+        "to": "LICENSE-Bujji.txt"
+      },
+      {
+        "from": "../NOTICE.md",
+        "to": "NOTICE-Bujji.md"
+      }
+    ],
+    "win": {
+      "target": [
+        "zip"
+      ],
+      "icon": "assets/icon.ico",
+      "signExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Bujji",
+      "deleteAppDataOnUninstall": false,
+      "artifactName": "Bujji Setup ${version}.${ext}"
+    },
+    "artifactName": "Bujji-${version}-${arch}.${ext}"
+  }
+}

@@ -1,0 +1,20 @@
+name: Bug report
+description: Report a reproducible problem without private data.
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem and reproduction steps
+      description: Include expected and actual behavior. Never include keys or personal documents.
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: App version and operating system
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted errors

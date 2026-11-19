@@ -1,0 +1,53 @@
+{
+  "repo": "Prahaladha/hima-tts-nano-te-ONNX",
+  "revision": "8fd92e3956163815892f6adcf7e3aae91e70272b",
+  "voice": "Bhavana",
+  "folder": "hima-bhavana-8fd92e3",
+  "license_note": "Model card: Other. Author posted permissive use reply; Optional setup downloads assets directly after the user reviews the terms. No model weights/runtime source redistributed in this repository.",
+  "files": {
+    "hima_onnx/__init__.py": {
+      "bytes": 12688,
+      "sha256": "2a991b3a08cc1a3c797891948c117a6395c4cc1079eca56ab1a98cfffa166ba7"
+    },
+    "text/normalize.py": {
+      "bytes": 111150,
+      "sha256": "dffd2ac0e74f0e0e541198fea0381d4af8f88f296ea8229a62677480ef1135cc"
+    },
+    "text/indic_languages.py": {
+      "bytes": 121884,
+      "sha256": "02ca3cfa2274e8ce76e843b694387e88840ef7e246ffd44e0e83045cc230f90c"
+    },
+    "config.yaml": {
+      "bytes": 676,
+      "sha256": "cf1732252209238053e052c89f0398f86d62e5ac288aa6aef243895122988c0b"
+    },
+    "prefix.safetensors": {
+      "bytes": 18020039,
+      "sha256": "b46229533f19d41cbcd6c294aa1ab28b9e44c37920d682e25b1b2a043a1f13cc"
+    },
+    "tokenizer.model": {
+      "bytes": 618690,
+      "sha256": "3e870fd3437b3616810c66a6834dd582d55300f106bc63dec3d3aec0e53f151f"
+    },
+    "voices/voices.json": {
+      "bytes": 349,
+      "sha256": "a8f97e0b396195c9ff621ad7cb4ac5849fc473137a9972890c303d4df9ea1247"
+    },
+    "voices/voices.safetensors": {
+      "bytes": 50688,
+      "sha256": "217d6836ca534cadcb82b89748e0816b14f05bb69754b05af2997014049d34fc"
+    },
+    "onnx/decoder_int8.onnx": {
+      "bytes": 23482392,
+      "sha256": "ca22d2751cbff909a0d98783fcc5df3315351000a60219ef6bb221b7261596fb"
+    },
+    "onnx/voices/frame_int8.onnx": {
+      "bytes": 11622260,
+      "sha256": "d0b5158a3740427aa406ab2cc1691a15c29dbc9318020fcbfe650dfa71b476f3"
+    },
+    "onnx/voices/step_int8.onnx": {
+      "bytes": 48565039,
+      "sha256": "a2d0dbbac3cd39f86d7b3125c405418a02d0cf1132b9e3cf64546ca4f3487f22"
+    }
+  }
+}

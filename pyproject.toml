@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=75"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bujji-core"
+version = "1.0.0"
+description = "Open-source Windows and Android personal assistant"
+requires-python = ">=3.11"
+dependencies = ["fastapi>=0.115,<1", "uvicorn>=0.34,<1", "httpx>=0.28,<1", "python-dotenv>=1,<2", "tzdata>=2025.1", "pypdf>=6.12,<7"]
+
+[project.optional-dependencies]
+desktop-control = ["uiautomation>=2.0.29,<3; sys_platform == 'win32'"]
+test = ["pytest>=8,<10"]
+browser-test = ["playwright>=1.56,<2"]
+local-voice = ["onnxruntime>=1.23,<2", "numpy>=2,<3", "safetensors>=0.6,<1", "sentencepiece>=0.2,<1", "PyYAML>=6,<7"]
+
+[tool.setuptools.packages.find]
+where = ["backend"]
+
+[tool.pytest.ini_options]
+pythonpath = ["backend"]
+testpaths = ["tests"]
+
+[tool.setuptools.package-data]
+bujji = ["assets/*.wav", "assets/*.json"]
