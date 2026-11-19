@@ -14,7 +14,7 @@
     "pack:installer": "electron-builder --win nsis --x64"
   },
   "dependencies": {
-    "dotenv": "^17.2.0"
+    "dotenv": "^18.0.10"
   },
   "devDependencies": {
     "electron": "^42.0.0",
